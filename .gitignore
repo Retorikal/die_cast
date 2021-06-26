@@ -1,0 +1,6 @@
+# Specify filepatterns you want git to ignore.
+Library/
+Temp/
+Logs/
+SwitchIL2CPPCache/
+SwitchIL2CPPStats/
