@@ -45,7 +45,8 @@ SpriteAtlas:
     packables:
     - {fileID: 2800000, guid: 4165679466259f94cb9f2bc3c8cebe86, type: 3}
     - {fileID: 2800000, guid: 8bcc2ea954f8a3d4d9bc5990d8240247, type: 3}
-    totalSpriteSurfaceArea: 38912
+    - {fileID: 2800000, guid: bc5bac5dc53066c44a8d55561887d297, type: 3}
+    totalSpriteSurfaceArea: 41984
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -203,6 +204,18 @@ SpriteAtlas:
   - {fileID: 7343063025764723533, guid: 8bcc2ea954f8a3d4d9bc5990d8240247, type: 3}
   - {fileID: -4266889009377865215, guid: 8bcc2ea954f8a3d4d9bc5990d8240247, type: 3}
   - {fileID: 3328831305847169029, guid: 8bcc2ea954f8a3d4d9bc5990d8240247, type: 3}
+  - {fileID: 1255886806578858968, guid: bc5bac5dc53066c44a8d55561887d297, type: 3}
+  - {fileID: -1370053830823408383, guid: bc5bac5dc53066c44a8d55561887d297, type: 3}
+  - {fileID: -7788075309685594394, guid: bc5bac5dc53066c44a8d55561887d297, type: 3}
+  - {fileID: -5815089765106233081, guid: bc5bac5dc53066c44a8d55561887d297, type: 3}
+  - {fileID: -4934906988947065316, guid: bc5bac5dc53066c44a8d55561887d297, type: 3}
+  - {fileID: -8751305700464915694, guid: bc5bac5dc53066c44a8d55561887d297, type: 3}
+  - {fileID: 3979204260073931992, guid: bc5bac5dc53066c44a8d55561887d297, type: 3}
+  - {fileID: -8789855834294868231, guid: bc5bac5dc53066c44a8d55561887d297, type: 3}
+  - {fileID: -8306682491009895328, guid: bc5bac5dc53066c44a8d55561887d297, type: 3}
+  - {fileID: -2857861339420560624, guid: bc5bac5dc53066c44a8d55561887d297, type: 3}
+  - {fileID: 318293378224529130, guid: bc5bac5dc53066c44a8d55561887d297, type: 3}
+  - {fileID: 6307645915033615906, guid: bc5bac5dc53066c44a8d55561887d297, type: 3}
   m_PackedSpriteNamesToIndex:
   - Floor_60
   - Floor_61
@@ -356,6 +369,18 @@ SpriteAtlas:
   - Wall_43
   - Wall_40
   - Wall_41
+  - Carpet_10
+  - Carpet_11
+  - Carpet_7
+  - Carpet_6
+  - Carpet_5
+  - Carpet_4
+  - Carpet_3
+  - Carpet_2
+  - Carpet_1
+  - Carpet_0
+  - Carpet_9
+  - Carpet_8
   m_RenderDataMap: {}
   m_Tag: Floor
   m_IsVariant: 0
