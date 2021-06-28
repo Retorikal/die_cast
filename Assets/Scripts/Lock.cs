@@ -13,13 +13,16 @@ public class Lock : MonoBehaviour, IPointedExecutor{
     public List<Sprite> diceIndicatorEmpty;
     public List<Sprite> diceIndicatorFilled;
     public Vector3 targetLuxScale;
+    public AudioClip submitSound;
 
+    AudioSource audioSrc;
     SpriteRenderer altarSprite;
     SpriteRenderer tileSprite;
     PointedResponder ptResp;
     Transform luxTransform;
 
     void Awake(){
+        audioSrc = GetComponent<AudioSource>();
         altarSprite = GetComponent<SpriteRenderer>();
         tileSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
         luxTransform = transform.GetChild(1).GetComponent<Transform>();
@@ -68,8 +71,13 @@ public class Lock : MonoBehaviour, IPointedExecutor{
 
     public void PointExec(){
         // Clicked = collect dice
+        if(!locked){
+            Master.m.Warn("Altar unlocked");
+        }
+
         if(checkDiceMatch()){
-            Master.m.Warn("+1");
+            Master.m.Warn("Lock open");
+            audioSrc.PlayOneShot(submitSound, 1f);
             return;
         }
         else{

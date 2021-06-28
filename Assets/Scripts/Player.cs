@@ -25,11 +25,13 @@ public class Player : MonoBehaviour, IDamageable{
     public Transform pointedObject;
 
     public AudioClip hurt;
+    public AudioClip healSound;
     public bool tutorialMode = false;
 
     bool changedPoint;
 
     AudioSource audioSrc;
+    SpriteRenderer sRender;
     Transform luxTransform;
     Transform ptrTransform;
     Vector3 targetLuxScale;
@@ -38,6 +40,7 @@ public class Player : MonoBehaviour, IDamageable{
     void Awake(){
         ptrTransform = transform.GetChild(1).GetComponent<Transform>();
         luxTransform = transform.GetChild(2).GetComponent<Transform>();
+        sRender = GetComponent<SpriteRenderer>();
         audioSrc = GetComponent<AudioSource>();
         rb2D = GetComponent<Rigidbody2D>();
         hitPt = maxHitPt;
@@ -87,9 +90,9 @@ public class Player : MonoBehaviour, IDamageable{
             }
             Debug.Log(output);
         }
-        if(Input.GetKeyDown(KeyCode.Q)){
-            Master.m.BeginTrial();
-        }
+
+        if(moveX < 0) sRender.flipX = false;
+        if(moveX > 0) sRender.flipX = true;
 
         luxTransform.localScale = Vector3.Lerp(luxTransform.localScale, targetLuxScale, 0.4f);
     }
@@ -131,18 +134,33 @@ public class Player : MonoBehaviour, IDamageable{
         targetLuxScale = new Vector3(scale, scale, 0);
     }
 
+    public void Respawn(){
+        diceInventory.Clear();
+        
+        hitPt = maxHitPt;
+
+        diceInventory = new List<int>(diceCapacity);
+        for(int i = 0; i < 3; i++){
+            diceInventory.Add(-1);
+        }
+    }
+
     public void Damage(int damage){
         audioSrc.PlayOneShot(hurt, 1f);
         hitPt -= damage;
+        Master.m.Warn("HP: " + hitPt.ToString());
         if(hitPt<0) Die();
     }
 
     public void Heal(int heal){
+        audioSrc.PlayOneShot(healSound, 1f);
         hitPt = (hitPt + heal > maxHitPt) ? maxHitPt : hitPt + heal;
     }
 
     public void Die(){
-        Debug.Log("ded");
+        var strs = new string[4] {"ded", "shindeiru", "try again", "u sux"};
+
+        Master.m.Warn(strs[Random.Range(0, 4)]);
         Master.m.Lose();
     }
 
@@ -153,7 +171,11 @@ public class Player : MonoBehaviour, IDamageable{
         diceInventory.Add(diceFaceValue);
 
         if(diceFaceValue == -1){
+            Master.m.Warn("Faceless Die +1");
             Heal(1);
+        }
+        else{
+            Master.m.Warn("Face " + diceFaceValue.ToString() + " Die +1");
         }
 
         RecalculateTorch();

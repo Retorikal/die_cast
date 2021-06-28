@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
+using MEC;
 
 public class Master : MonoBehaviour{
 
@@ -9,8 +12,10 @@ public class Master : MonoBehaviour{
     public GameObject diceFab;
     public GameObject bulletFab;
     public GameObject altarFab;
+    public GameObject tooltip;
+    public GameObject warner;
 
-    public List<Vector3> bulletSpawnPoint;
+    public List<Vector2> bulletSpawnPt;
     public List<Bullet> bullets;
     public List<Dice> dices;
     public List<Lock> locks;
@@ -29,14 +34,22 @@ public class Master : MonoBehaviour{
 
     public int currentLevel;
     public bool trialBegun;
+    public bool firstDice = true;
+    public bool firstStart = true;
+
+    TextMeshPro warnerText;
+    TextMeshPro tooltipText;
 
     float sinceLastSpawn;
     AudioSource audioSrc;
-    Tooltip tooltip;
-    Warner warner;
+
+    string tooltipTag;
 
     void Awake(){
         DontDestroyOnLoad(gameObject);
+        tooltipTag = gameObject.GetInstanceID().ToString();
+        warnerText = warner.GetComponent<TextMeshPro>();
+        tooltipText = tooltip.GetComponent<TextMeshPro>();
         audioSrc = GetComponent<AudioSource>();
         dices = new List<Dice>();
         bullets = new List<Bullet>();
@@ -45,6 +58,10 @@ public class Master : MonoBehaviour{
         trialBegun = false;
 
         m = this;
+    }
+
+    void Start(){
+        Warn("Roll your first dice to begin TRIAL (L Click)");
     }
 
     // Update is called once per frame
@@ -62,7 +79,7 @@ public class Master : MonoBehaviour{
                 if(activeBulletCount < bulletLack) div = 3;
 
                 var adjustedDelay = bulletRespawnDelay/div;
-                if(sinceLastSpawn > adjustedDelay) SpawnBullet(Vector2.zero);
+                if(sinceLastSpawn > adjustedDelay) SpawnBullet(bulletSpawnPt[Random.Range(0, bulletSpawnPt.Count)]);
             }
 
             sinceLastSpawn += Time.fixedDeltaTime;
@@ -70,17 +87,40 @@ public class Master : MonoBehaviour{
     }
 
     public void HideTooltip(){
-
+        tooltip.transform.position = new Vector3(-100, -100, -10);
     }
 
     // Tooltip over object faced by player. Disappears as soon as facing away 
     public void ShowTooltip(Transform t, string message){
-        Debug.Log(message);
+        tooltip.transform.position = t.position + new Vector3(0, 2, -10);
+        tooltipText.text = message;
     }
 
     // Floats for n sec on player before disappearing
     public void Warn(string message){
-        Debug.Log(message);
+        warner.transform.position = player.transform.position + new Vector3(0, 2, -10);
+        warnerText.text = message;
+
+        Timing.KillCoroutines(tooltipTag);
+        Timing.RunCoroutine(_FadeWarn(warner.transform.position), tooltipTag);
+    }
+
+    IEnumerator<float> _FadeWarn(Vector3 beginPos){
+        var speed = 0.25f;
+        var increment = new Vector3(0, 1, 0) * speed * Time.deltaTime;
+        var delta = Vector3.zero;
+
+        var fadeSpeed = 0.5f;
+        var fadeIncrement = fadeSpeed * Time.deltaTime;
+        var fadeDelta = 0f;
+
+        do {
+            delta += increment;
+            fadeDelta += fadeIncrement;
+            warnerText.color = new Color(1f, 1f, 1f, 1-fadeDelta);
+            warner.transform.position = beginPos + delta;
+            yield return Timing.WaitForOneFrame;
+        } while(delta.y <= 0.5f);
     }
 
     public void SpawnBullet(Vector2 startLoc){
@@ -109,6 +149,11 @@ public class Master : MonoBehaviour{
     }
 
     public void ThrowDice(Vector2 direction, bool thrown){
+        if(firstDice){
+            BeginTrial();
+            firstDice = false;
+        }
+
         var dice = dices.Find(d => !d.alive);
 
         if(dice == null){
@@ -160,15 +205,18 @@ public class Master : MonoBehaviour{
         bulletTypical = 1; 
         bulletCap = 1;
         altarCount = 1;
+        currentLevel = 0;
 
         trialBegun = true;
+        audioSrc.Stop();
         audioSrc.Play();
 
         NextLevel();
     }
 
     public void Lose(){
-
+        BeginTrial();
+        player.Respawn();
     }
 
     public void NextLevel(){
@@ -209,8 +257,16 @@ public class Master : MonoBehaviour{
         foreach(var d in dices){
             d.Remove(false);
         }
+        
+        if(currentLevel != 1) {
+            player.rb2D.position = new Vector2(0, 7);
+            Warn("Level " + currentLevel.ToString());
+        }
+        else{
+            if(firstStart) Warn("Slam your dice to restore nearby dices (R Click)");
+            firstStart = false;
+        }
 
-        player.rb2D.position = new Vector2(0, 7);
         sinceLastSpawn = 0;
     }
 }

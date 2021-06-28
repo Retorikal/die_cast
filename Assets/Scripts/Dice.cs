@@ -23,20 +23,25 @@ public class Dice : MonoBehaviour, IPointedExecutor, IDamageable{
     public AudioClip diceSettle;
     public AudioClip diceRoll;
     public AudioClip diceThrow;
+    public AudioClip diceHeal;
 
+    public List<Sprite> landedDice;
+
+    Animator anim;
     bool healer;
     float injury;
+    SpriteRenderer sRenderer;
     AudioSource audioSrc;
     Transform luxTransform;
     Vector3 targetLuxScale;
-    TextMeshPro diceFaceText;
     Rigidbody2D targetTow;
     PointedResponder ptResp;
 
     void Awake(){
+        sRenderer = GetComponent<SpriteRenderer>();
         audioSrc = GetComponent<AudioSource>();
-        diceFaceText = GetComponentInChildren<TextMeshPro>(true); 
-        luxTransform = transform.GetChild(1).GetComponent<Transform>();
+        luxTransform = transform.GetChild(0).GetComponent<Transform>();
+        anim = GetComponent<Animator>();
         rb2D = GetComponent<Rigidbody2D>();
         ptResp = GetComponent<PointedResponder>();
         ptResp.pointedExecutor = this;
@@ -54,7 +59,8 @@ public class Dice : MonoBehaviour, IPointedExecutor, IDamageable{
     void Update(){
         if(rolling){   
             diceFaceValue = Random.Range(1, 7);
-            diceFaceText.text = diceFaceValue.ToString();
+        }else{
+            sRenderer.sprite = landedDice[diceFaceValue-1];
         }
 
         luxTransform.localScale = Vector3.Lerp(luxTransform.localScale, targetLuxScale, 0.4f);
@@ -112,6 +118,8 @@ public class Dice : MonoBehaviour, IPointedExecutor, IDamageable{
     }
 
     public void Roll(Vector2 velocity){
+        anim.enabled = true;
+        anim.SetBool("Rolling", true);
         audioSrc.PlayOneShot(diceRoll, 1.0F);
         ptResp.enabled = false;
         diceFaceValue = Random.Range(1, 7);
@@ -149,16 +157,20 @@ public class Dice : MonoBehaviour, IPointedExecutor, IDamageable{
     }
 
     void Settle(bool slammed = false){
+        anim.SetBool("Rolling", false);
+        anim.enabled = false;
         ptResp.enabled = true;
         rolling = false;
         rb2D.isKinematic = true;
         rb2D.velocity = Vector2.zero;
-        audioSrc.PlayOneShot(diceSettle, 1.0F);
 
         if(healer){
             Master.m.HealDices(rb2D.position, 0.5f + 2*diceFaceValue/hitPt);
+            audioSrc.PlayOneShot(diceHeal, 1.0F);
             healer = false;
         }
+        else
+            audioSrc.PlayOneShot(diceSettle, 1.0F);
 
         RecalculateTorch();
     }

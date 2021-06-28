@@ -170,7 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageProperty: 0
   speed: 5
-  throwVelocity: 5
+  throwVelocity: 7
   staggerTime: 0.5
   diceMeterCap: 5
   diceCapacity: 6
@@ -183,6 +183,7 @@ MonoBehaviour:
   rb2D: {fileID: 0}
   pointedObject: {fileID: 0}
   hurt: {fileID: 8300000, guid: e3f8931025d635a0188a6333a04ca599, type: 3}
+  healSound: {fileID: 8300000, guid: 3549d614e59a77bb1b87ba0f31aa1c54, type: 3}
   tutorialMode: 0
 --- !u!81 &4084487633962819800
 AudioListener:
