@@ -161,9 +161,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 614377234}
     m_Modifications:
+    - target: {fileID: 4665602350239975992, guid: 4d3c20a472a0a855bae0be03c8d473bf, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 1811629848}
     - target: {fileID: 5729773288048459973, guid: 4d3c20a472a0a855bae0be03c8d473bf, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5729773288048459973, guid: 4d3c20a472a0a855bae0be03c8d473bf, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5729773288048459976, guid: 4d3c20a472a0a855bae0be03c8d473bf, type: 3}
       propertyPath: m_RootOrder
@@ -871,6 +879,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c0d51d7b31d173d4ba7f548a0ea0b4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1811629848 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5729773288048459974, guid: 4d3c20a472a0a855bae0be03c8d473bf, type: 3}
+  m_PrefabInstance: {fileID: 156361778}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1811629850 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5729773288048459976, guid: 4d3c20a472a0a855bae0be03c8d473bf, type: 3}
