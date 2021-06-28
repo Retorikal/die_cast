@@ -15,6 +15,7 @@ public class Master : MonoBehaviour{
     public List<Dice> dices;
     public List<Lock> locks;
     public Player player;
+    public Exit exit;
 
     // Level property
     public float bulletVelocity;
@@ -33,12 +34,10 @@ public class Master : MonoBehaviour{
     AudioSource audioSrc;
     Tooltip tooltip;
     Warner warner;
-    Exit exit;
 
     void Awake(){
         DontDestroyOnLoad(gameObject);
         audioSrc = GetComponent<AudioSource>();
-        exit = GameObject.FindWithTag("Exit").GetComponent<Exit>();
         dices = new List<Dice>();
         bullets = new List<Bullet>();
         locks = new List<Lock>();
@@ -100,10 +99,12 @@ public class Master : MonoBehaviour{
 
     public void CheckLock(){
         if(locks.Count == 0) return;
+        Debug.Log("Checking lock..");
         foreach(var l in locks){
             if(l.locked) return;
         }
 
+        Debug.Log("Unlocked!");
         exit.Unlock();
     }
 
@@ -209,6 +210,7 @@ public class Master : MonoBehaviour{
             d.Remove(false);
         }
 
+        player.rb2D.position = new Vector2(0, 7);
         sinceLastSpawn = 0;
     }
 }

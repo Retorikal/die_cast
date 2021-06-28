@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 6856688228257813489}
   - component: {fileID: 6856688228257813453}
   - component: {fileID: 6856688228257813490}
-  - component: {fileID: 6856688228257813491}
   - component: {fileID: -1789099425902405384}
+  - component: {fileID: 886727452}
   m_Layer: 0
   m_Name: Exit
   m_TagString: Exit
@@ -70,10 +70,10 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -84,7 +84,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.5, y: 1.5}
+  m_Size: {x: 4, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &6856688228257813490
 MonoBehaviour:
@@ -100,20 +100,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locked: 1
   vertical: 0
---- !u!114 &6856688228257813491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6856688228257813494}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c2db68648acbf2f6a517d45344c19aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pointed: 0
-  tooltip: 
 --- !u!82 &-1789099425902405384
 AudioSource:
   m_ObjectHideFlags: 0
@@ -124,7 +110,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: a198d22d8c3cf75f1809adde184a2efb, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -210,6 +196,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &886727452
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6856688228257813494}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 296b347e8ae44b0afb87cc21125b0649, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6856688228847421485
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,7 +226,7 @@ GameObject:
   - component: {fileID: 6856688228847421484}
   - component: {fileID: 6856688228847421487}
   m_Layer: 0
-  m_Name: ExitGrid (1)
+  m_Name: ExitGrid(1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -280,9 +285,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.34632385, g: 0.28644538, b: 0.38679248, a: 1}
+  m_SortingOrder: 2
+  m_Sprite: {fileID: 5213229242370633579, guid: 0c3c69ee267355b42b506b0ae1a9265d, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -303,7 +308,7 @@ GameObject:
   - component: {fileID: 6856688229331367529}
   - component: {fileID: 6856688229331367528}
   m_Layer: 0
-  m_Name: ExitGrid
+  m_Name: ExitGrid(0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -362,9 +367,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.34632385, g: 0.28644538, b: 0.38679248, a: 1}
+  m_SortingOrder: 2
+  m_Sprite: {fileID: 5213229242370633579, guid: 0c3c69ee267355b42b506b0ae1a9265d, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -385,7 +390,7 @@ GameObject:
   - component: {fileID: 6856688229366069021}
   - component: {fileID: 6856688229366069020}
   m_Layer: 0
-  m_Name: ExitGrid (2)
+  m_Name: ExitGrid(2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -444,9 +449,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.34632385, g: 0.28644538, b: 0.38679248, a: 1}
+  m_SortingOrder: 2
+  m_Sprite: {fileID: 5213229242370633579, guid: 0c3c69ee267355b42b506b0ae1a9265d, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -467,7 +472,7 @@ GameObject:
   - component: {fileID: 6856688230286526140}
   - component: {fileID: 6856688230286526143}
   m_Layer: 0
-  m_Name: ExitGrid (3)
+  m_Name: ExitGrid(3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -526,9 +531,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.34632385, g: 0.28644538, b: 0.38679248, a: 1}
+  m_SortingOrder: 2
+  m_Sprite: {fileID: 5213229242370633579, guid: 0c3c69ee267355b42b506b0ae1a9265d, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

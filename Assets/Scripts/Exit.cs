@@ -3,34 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Exit : MonoBehaviour, IPointedExecutor{
+public class Exit : MonoBehaviour{
 
     public bool locked = true;
     public bool vertical = false;
 
-    PointedResponder ptResp;
+    Animator anim;
+    AudioSource audioSrc;
+    Collider2D triggerer;
 
     void Awake(){
-        ptResp = GetComponent<PointedResponder>();
-        ptResp.pointedExecutor = this;
+        audioSrc = GetComponent<AudioSource>();
+        anim = GetComponent<Animator>();
+        triggerer = GetComponent<Collider2D>();
     }
 
-    public void RandomizePosition(){
-        ptResp.tooltip = "";
-        locked = false;
-
+    void OnTriggerEnter2D(Collider2D other){
+        if(other.CompareTag("Player") && !locked){
+            Master.m.NextLevel();
+            Lock();
+        }
     }
 
     public void Unlock(){
+        triggerer.isTrigger = true;
+        anim.SetBool("Open", true);
+        audioSrc.Play();
         locked = false;
-        Master.m.Warn("Unlocked!");
-        ptResp.tooltip = "Press space to escape";
+        Master.m.Warn("EXIT UNLOCKED!");
     }
 
-    public void PointExec(){
-        if(!locked){
-            Master.m.NextLevel();
-            ptResp.tooltip = "";
-        }
+    public void Lock(){
+        triggerer.isTrigger = false;
+        anim.SetBool("Open", false);
+        audioSrc.Play();
+        locked = true;
     }
 }

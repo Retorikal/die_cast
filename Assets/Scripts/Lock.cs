@@ -8,13 +8,29 @@ public class Lock : MonoBehaviour, IPointedExecutor{
     public int lockCode;
     public bool locked = true;
 
-    TextMeshPro lockFaceText;
+    public Sprite altarEmpty;
+    public List<Sprite> filledAltar;
+    public List<Sprite> diceIndicatorEmpty;
+    public List<Sprite> diceIndicatorFilled;
+    public Vector3 targetLuxScale;
+
+    SpriteRenderer altarSprite;
+    SpriteRenderer tileSprite;
     PointedResponder ptResp;
+    Transform luxTransform;
 
     void Awake(){
-        lockFaceText = GetComponentInChildren<TextMeshPro>(true); 
+        altarSprite = GetComponent<SpriteRenderer>();
+        tileSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        luxTransform = transform.GetChild(1).GetComponent<Transform>();
         ptResp = GetComponent<PointedResponder>();
         ptResp.pointedExecutor = this;
+
+        targetLuxScale = Vector3.zero;
+    }
+
+    void Update(){
+        luxTransform.localScale = Vector3.Lerp(luxTransform.localScale, targetLuxScale, 0.4f);
     }
 
     bool checkDiceMatch(){
@@ -22,7 +38,11 @@ public class Lock : MonoBehaviour, IPointedExecutor{
         for(var i = 0; i < diceInventory.Count; i++){
             if(diceInventory[i] == lockCode){
                 diceInventory.RemoveAt(i);
-                lockFaceText.text = "X";
+
+                altarSprite.sprite = filledAltar[lockCode-1];
+                tileSprite.sprite = diceIndicatorFilled[lockCode-1];
+                targetLuxScale = new Vector3(4, 4, 0);
+
                 locked = false;
                 Master.m.CheckLock();
                 return true;
@@ -33,13 +53,17 @@ public class Lock : MonoBehaviour, IPointedExecutor{
 
     public void Respawn(){
         var pos = transform.position;
-        pos.x = Random.Range(-7, 8);
-        pos.y = Random.Range(-7, 8);
+        pos.x = Random.Range(-6, 7);
+        pos.y = Random.Range(-6, 7);
 
         transform.position = pos;
         locked = true;
         lockCode = Random.Range(1, 7);
-        lockFaceText.text = lockCode.ToString();
+        altarSprite.sprite = altarEmpty;
+        tileSprite.sprite = diceIndicatorEmpty[lockCode-1];
+
+        targetLuxScale = Vector3.zero;
+        luxTransform.localScale = Vector3.zero;
     }
 
     public void PointExec(){

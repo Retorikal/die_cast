@@ -143,7 +143,7 @@ public class Dice : MonoBehaviour, IPointedExecutor, IDamageable{
 
     void RecalculateTorch(){
         float scale = 0.5f;
-        scale += diceFaceValue/hitPt;
+        scale += 2 * diceFaceValue/hitPt;
 
         targetLuxScale = new Vector3(scale, scale, 0);
     }
@@ -156,7 +156,7 @@ public class Dice : MonoBehaviour, IPointedExecutor, IDamageable{
         audioSrc.PlayOneShot(diceSettle, 1.0F);
 
         if(healer){
-            Master.m.HealDices(rb2D.position, 0.5f + diceFaceValue/hitPt);
+            Master.m.HealDices(rb2D.position, 0.5f + 2*diceFaceValue/hitPt);
             healer = false;
         }
 

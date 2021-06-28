@@ -83,7 +83,7 @@ public class Bullet : MonoBehaviour{
     }
 
     IEnumerator<float> _Telegraph(Vector2 dir){
-        var speed = 25f;
+        var speed = velocity * 3.5f;
         var increment = (Vector3)dir * speed * Time.deltaTime;
         var target = (Vector3)rb2D.position + new Vector3(0, 0, 0.5f);
         var origin = target - 5 * (Vector3)dir;
@@ -94,10 +94,7 @@ public class Bullet : MonoBehaviour{
             var positions = new Vector3[2] {origin, target};
             lRenderer.SetPositions(positions);
             yield return Timing.WaitForOneFrame;
-            Debug.Log("Chase tele:" + target + " " + increment);
         } while(Mathf.Abs(target.x) < 15 && Mathf.Abs(target.y) < 15);
-
-        Debug.Log("Chase tele end");
     }
 
     public void Spawn(Vector2 startLoc){

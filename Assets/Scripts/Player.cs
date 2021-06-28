@@ -80,14 +80,14 @@ public class Player : MonoBehaviour, IDamageable{
             var pResp = pointedObject.gameObject.GetComponent<PointedResponder>();
             if(pResp != null) pResp.PointExec();
         }
-        if(Input.GetKey(KeyCode.R)){
+        if(Input.GetKeyDown(KeyCode.R)){
             string output = "";
             foreach(var i in diceInventory){
                 output += i.ToString() + ",";
             }
             Debug.Log(output);
         }
-        if(Input.GetKey(KeyCode.Q)){
+        if(Input.GetKeyDown(KeyCode.Q)){
             Master.m.BeginTrial();
         }
 
@@ -125,7 +125,7 @@ public class Player : MonoBehaviour, IDamageable{
     void RecalculateTorch(){
         float scale = 1.5f;
         foreach(var i in diceInventory){
-            scale += i == -1 ? 1:0;
+            scale += i == -1 ? 2:0;
         }
 
         targetLuxScale = new Vector3(scale, scale, 0);
